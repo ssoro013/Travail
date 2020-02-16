@@ -1,0 +1,71 @@
+{
+    "name": "travail",
+    "version": "1.0.0",
+    "description": "a platform to help startups recruit top talent",
+    "main": "webpack.config.js",
+    "author": "ssoro013",
+    "license": "ISC",
+    "homepage": "https://github.com/ssoro013/Travail#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ssoro013/Travail.git"
+    },
+    "scripts": {
+        "start": "nodemon ./server/server.js",
+        "build": "npx webpack --config webpack.config.js -d -w",
+        "test": "jest --coverage"
+    },
+    "bugs": {
+        "url": "https://github.com/ssoro013/Travail/issues"
+    },
+    "dependencies": {
+        "axios": "^0.19.2",
+        "compression": "^1.7.4",
+        "core-js": "^3.6.4",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "moment": "^2.24.0",
+        "morgan": "^1.9.1",
+        "nodemon": "^2.0.2",
+        "path": "^0.12.7",
+        "pg": "^7.18.1",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0",
+        "redis": "^3.0.2",
+        "request": "^2.88.2",
+        "styled-components": "^5.0.1"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.8.4",
+        "@babel/plugin-proposal-class-properties": "^7.8.3",
+        "@babel/preset-env": "^7.8.4",
+        "@babel/preset-flow": "^7.8.3",
+        "@babel/preset-react": "^7.8.3",
+        "babel-core": "^6.26.3",
+        "babel-loader": "^8.0.6",
+        "babel-plugin-transform-export-extensions": "^6.22.0",
+        "babel-polyfill": "^6.26.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-stage-0": "^6.24.1",
+        "enzyme": "^3.11.0",
+        "enzyme-adapter-react-16": "^1.15.2",
+        "enzyme-to-json": "^3.4.4",
+        "eslint": "^6.8.0",
+        "eslint-plugin-react": "^7.18.3",
+        "jest": "^25.1.0",
+        "react-test-renderer": "^16.12.0",
+        "supertest": "^4.0.2",
+        "ts-jest": "^25.2.0",
+        "webpack": "^4.41.6",
+        "webpack-cli": "^3.3.11"
+    },
+    "jest": {
+        "testEnvironment": "node",
+        "snapshotSerializers": [
+            "enzime-to-json/serializer"
+        ],
+        "setupFiles": [
+            "./setup.js"
+        ]
+    }
+}

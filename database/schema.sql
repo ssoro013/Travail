@@ -1,0 +1,19 @@
+CREATE DATABASE travail;
+
+CREATE TABLE company (
+    id BIGSERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+)
+
+CREATE TABLE job (
+    id BIGSERIAL PRIMARY KEY,
+    title TEXT NOT NULL,
+    city TEXT NOT NULL,
+    state TEXT NOT NULL,
+    salary TEXT NOT NULL,
+    type TEXT NOT NULL,
+    description TEXT NOT NULL,
+    company_id BIGINT REFERENCES company(id)
+    created TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+)
