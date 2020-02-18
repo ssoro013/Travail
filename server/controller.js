@@ -39,6 +39,27 @@ var getJobs = (req, res) => {
     })
 }
 
+var getLocations = (req, res) => {
+    client.get('locations', (err, data) => {
+        if(err) {
+            console.log(err)
+        } else if(data) {
+            res.send(JSON.parse(data))
+        } else {
+            connection.query('select distinct city from jobs', (error, results) => {
+                if(error) {
+                    res.send(error)
+                } else {
+                    res.send(results.rows);
+                    client.setex('locations', 3600, JSON.stringify(results.rows))
+                }
+            })
+        }
+    })
+}
+
+
+
 var getAll = (req, res) => {
     connection.query('select * from jobs inner join companies on jobs.company_id = companies.id', (error, results) => {
         if(error) {
@@ -62,6 +83,7 @@ var getAll = (req, res) => {
 module.exports = {
     getCompanies,
     getJobs,
+    getLocations,
     getAll,
     // updateStatus
 };
