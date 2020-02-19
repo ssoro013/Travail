@@ -61,30 +61,31 @@ var DescriptionTitle = styled.div `
 var Description = styled.div `
     text-align: left;
     white-space: pre-wrap;
+    font-size: 15px;
 `
 
 var Pre = styled.div `
     background-color: white;          
     margin: 32px auto 0;
     padding: 16px;
-    max-width: 1200px;
+    max-width: 750px;
     width: 100%;
     border: 1px solid lightgray;
     font-family: Avenir, sans-serif;
 `
 
 const Job = (props) => {
-    console.log(props)
     var {id, title, city, state, salary, type, description, status, company_id} = props.job;
     return (
         <Pre>
             <Title>{title}</Title>
             <TitleLocation>{`${props.company[0].name} • ${city}, ${state}`}</TitleLocation>
-            <Salary>{salary}</Salary>
+            <Salary>{`$${salary/1000},000`}</Salary>
             <Type>{type}</Type>
             <Hr></Hr>
             <DescriptionTitle>Description</DescriptionTitle>
             <Description>{description}</Description>
+            <button>Apply!</button>
         </Pre>
     )
 };
