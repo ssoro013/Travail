@@ -73,21 +73,60 @@ var Pre = styled.div `
     border: 1px solid lightgray;
     font-family: Avenir, sans-serif;
 `
+var Status = styled.div `
+    float: right;
+`
 
-const Job = (props) => {
-    var {id, title, city, state, salary, type, description, status, company_id} = props.job;
-    return (
-        <Pre>
-            <Title>{title}</Title>
-            <TitleLocation>{`${props.company[0].name} • ${city}, ${state}`}</TitleLocation>
-            <Salary>{`$${salary/1000},000`}</Salary>
-            <Type>{type}</Type>
-            <Hr></Hr>
-            <DescriptionTitle>Description</DescriptionTitle>
-            <Description>{description}</Description>
-            <button>Apply!</button>
-        </Pre>
-    )
-};
+class Job extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: false,
+            maxWords: 250
+        }
+
+        this.onToggle = this.onToggle.bind(this);
+        this.showMore = this.showMore.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    onToggle() {
+        this.setState({isOpen: !this.state.isOpen})
+    }
+
+    showMore() {
+        return this.state.isOpen ? this.props.job.description : this.props.job.description.slice(0, this.state.maxWords)
+    }
+
+    handleClick(event) {
+        event.preventDefault();
+        this.props.showForm();
+    }
+
+    render() {
+        var {id, title, city, state, salary, type, description, status, company_id} = this.props.job;
+
+        return(
+            <Pre>
+                <Title>{title}</Title>
+                <TitleLocation>{`${this.props.company[0].name} • ${city}, ${state}`}</TitleLocation>
+                <Status>{status}</Status>
+                <Salary>{`$${salary/1000},000`}</Salary>
+                <Type>{type}</Type>
+                <Hr></Hr>
+                <DescriptionTitle>Description</DescriptionTitle>
+                {/* <Description>{description}</Description> */}
+                <Description>
+                    {this.showMore()}
+                    <a onClick={this.onToggle}><u>{this.state.isOpen ? 
+                    <span>Show Less</span> 
+                    :
+                    <span>Show More</span>}</u></a>
+                </Description>
+                {status === 'Todo' ? <button onClick={this.handleClick}>Apply!</button> : ''}
+            </Pre>
+        )
+    }
+}
 
 export default Job;
