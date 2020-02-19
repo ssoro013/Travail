@@ -30,8 +30,8 @@ class Form extends React.Component {
         })
     }
 
-    handleSubmit(event) {
-
+    handleClick(event) {
+        
     }
 
     render() {
@@ -73,6 +73,7 @@ class Form extends React.Component {
                     </label>
                 </p>
                <button type='submit' value='Submit'>Apply</button>
+               <button type='submit' value='Submit'>Cancel</button>
             </form>
             </FormDiv>
         )
