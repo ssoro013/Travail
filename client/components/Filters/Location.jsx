@@ -1,5 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
 import {DropdownMultiple} from 'reactjs-dropdown-component';
+
+var Filter = styled.div `
+    display: inline-block;
+    border-radius: 14px;
+    margin-right: 1em;
+    float: left;
+    font-size: 20px;
+    background-color: rgb(198, 193, 193);
+    font-weight: bold;
+    color: rgb(108, 101, 102);
+    &:hover {
+        cursor: pointer;
+    };
+    width: 25%;
+`
 
 class Location extends React.Component {
     constructor(props) {
@@ -14,13 +30,13 @@ class Location extends React.Component {
                 },
                 {
                   id: 1,
-                  title: 'Dublin',
+                  title: 'Los Angeles',
                   selected: false,
                   key: 'location'
                 },
                 {
                   id: 2,
-                  title: 'Istanbul',
+                  title: 'Seattle',
                   selected: false,
                   key: 'location'
                 },
@@ -35,10 +51,6 @@ class Location extends React.Component {
         this.toggleSelected = this.toggleSelected.bind(this);
     }
 
-    componentDidMount(){
-
-    }
-
     toggleSelected(id, key) {
         var temp = JSON.parse(JSON.stringify(this.state[key]));
         temp[id].selected = !temp[id].selected;
@@ -51,12 +63,14 @@ class Location extends React.Component {
 
     render() {
         return (
-            <DropdownMultiple
-                titleHelper="Location"
-                title="Select Location"
-                list={this.state.location}
-                toggleItem={this.toggleSelected}
-            />
+            <Filter>
+                <DropdownMultiple
+                    titleHelper="Location"
+                    title="Select Location"
+                    list={this.state.location}
+                    toggleItem={this.toggleSelected}
+                />
+            </Filter>
         );
     }
 }
