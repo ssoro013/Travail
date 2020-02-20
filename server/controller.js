@@ -12,27 +12,29 @@ var getCompanies = (req, res) => {
                 if(error) {
                     res.send(error)
                 } else {
-                    res.send(results.rows)
                     client.setex('companies', 3600, JSON.stringify(results.rows))
+                    res.send(results.rows)
                 }
             })
         }
     })
 }
 
+
 var getJobs = (req, res) => {
+    var query = 'select jobs.id, jobs.title, jobs.city, jobs.state, jobs.salary, jobs.type, jobs.description, jobs.status, companies.company, companies.employees, companies.funding, companies.round from jobs inner join companies on jobs.company_id = companies.id'
     client.get('jobs', (err, data) => {
         if(err) {
             console.log(err)
         } else if(data) {
-            res.send(JSON.parse(data))
+            res.send(JSON.parse(data).sort((a,b) => Number(a.id) - Number(b.id)))
         } else {
-            connection.query('select * from jobs', (error, results) => {
+            connection.query(query, (error, results) => {
                 if(error) {
                     res.send(error)
                 } else {
-                    res.send(results.rows);
-                    client.setex('jobs', 3600, JSON.stringify(results.rows))
+                    client.setex('jobs', 3600, JSON.stringify(results.rows.sort((a,b) => a - b)));
+                    res.send(results.rows.sort((a,b) => a - b));
                 }
             })
         }
@@ -50,40 +52,77 @@ var getLocations = (req, res) => {
                 if(error) {
                     res.send(error)
                 } else {
-                    res.send(results.rows);
                     client.setex('locations', 3600, JSON.stringify(results.rows))
+                    res.send(results.rows);
                 }
             })
         }
     })
 }
 
-
-
-var getAll = (req, res) => {
-    connection.query('select * from jobs inner join companies on jobs.company_id = companies.id', (error, results) => {
-        if(error) {
-            res.send(error)
+var getRounds = (req, res) => {
+    client.get('rounds', (err, data) => {
+        if(err) {
+            console.log(err)
+        } else if(data) {
+            res.send(JSON.parse(data))
         } else {
-            res.send(results.rows);
+            connection.query('select distinct round from companies', (error, results) => {
+                if(error) {
+                    res.send(error)
+                } else {
+                    client.setex('rounds', 3600, JSON.stringify(results.rows))
+                    res.send(results.rows);
+                }
+            })
         }
     })
 }
 
-// var updateStatus = (req, res) => {
-//     connection.query(`update jobs set status = "${req.status}" where id = "${req.id}"`, (error, results) => {
-//         if(error) {
-//             res.send(error)
-//         } else {
-//             res.status(200).send('Status updated!')
-//         }
-//     })
-// }
+var getStatus = (req, res) => {
+    client.get('status', (err, data) => {
+        if(err) {
+            console.log(err)
+        } else if(data) {
+            res.send(JSON.parse(data))
+        } else {
+            connection.query('select distinct status from jobs', (error, results) => {
+                if(error) {
+                    res.send(error)
+                } else {
+                    client.setex('status', 3600, JSON.stringify(results.rows))
+                    res.send(results.rows);
+                }
+            })
+        }
+    })
+}
+
+var updateStatus = (req, res) => {
+    connection.query(`update jobs set status = 'Applied' where id = '${req.body.id}'`, (error, results) => {
+        if(error) {
+            res.send(error)
+        } else {
+            client.del('jobs', (error, reply) => {
+                console.log(reply);
+                if(!error) {
+                    if(reply === 1) {
+                        console.log(`Key is deleted`)
+                        res.status(200).send('Status updated!')
+                    } else {
+                        console.log('Keys jobs does not exist')
+                    }
+                }
+            });
+        }
+    })
+}
 
 module.exports = {
     getCompanies,
     getJobs,
     getLocations,
-    getAll,
-    // updateStatus
+    updateStatus,
+    getRounds,
+    getStatus
 };
