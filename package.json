@@ -61,9 +61,9 @@
         "webpack-cli": "^3.3.11"
     },
     "jest": {
-        "testEnvironment": "node",
+        "testEnvironment": "jsdom",
         "snapshotSerializers": [
-            "enzime-to-json/serializer"
+            "<rootDir>/node_modules/enzyme-to-json/serializer"
         ],
         "setupFiles": [
             "./setup.js"

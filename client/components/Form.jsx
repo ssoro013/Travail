@@ -27,6 +27,7 @@ class Form extends React.Component {
 
         this.state = this.initialState
 
+        //Class methods binding
         this.validator = this.validator.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick1 = this.handleClick1.bind(this);
@@ -34,6 +35,7 @@ class Form extends React.Component {
         this.reset = this.reset.bind(this);
     }
 
+    //Form inputs validator
     validator(){
         var {first, last, email, phone, location, resume, cover} = this.state
         if(first === '' || last === '' || email === '' || phone === '' || location === '' || document.getElementById('resume').value === '') {
@@ -42,7 +44,8 @@ class Form extends React.Component {
             return true;
         }
     }
-
+    
+    //Input handler
     handleChange(event) {
         var name = event.target.name;
         var value = event.target.value;
@@ -51,6 +54,7 @@ class Form extends React.Component {
         })
     }
 
+    //Apply button click method
     handleClick1(event) {
         event.preventDefault();
         if(this.validator()) {
@@ -59,12 +63,14 @@ class Form extends React.Component {
         }
     }
 
+    //Cancel button click method
     handleClick2(event) {
         event.preventDefault();
         this.props.hideForm();
         this.reset();
     }
 
+    //Reset form input after application
     reset() {
         this.setState(this.initialState);
         document.getElementById('resume').value = '';

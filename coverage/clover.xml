@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1582228041995" clover="3.2.0">
-  <project timestamp="1582228041995" name="All files">
-    <metrics statements="126" coveredstatements="51" conditionals="26" coveredconditionals="2" methods="58" coveredmethods="6" elements="210" coveredelements="59" complexity="0" loc="126" ncloc="126" packages="2" files="7" classes="7"/>
+<coverage generated="1582228906070" clover="3.2.0">
+  <project timestamp="1582228906070" name="All files">
+    <metrics statements="126" coveredstatements="58" conditionals="26" coveredconditionals="2" methods="58" coveredmethods="9" elements="210" coveredelements="69" complexity="0" loc="126" ncloc="126" packages="2" files="7" classes="7"/>
     <package name="components">
-      <metrics statements="99" coveredstatements="48" conditionals="26" coveredconditionals="2" methods="40" coveredmethods="6"/>
+      <metrics statements="99" coveredstatements="55" conditionals="26" coveredconditionals="2" methods="40" coveredmethods="9"/>
       <file name="App.jsx" path="/Users/sorodidiouf/Travail/client/components/App.jsx">
         <metrics statements="47" coveredstatements="26" conditionals="6" coveredconditionals="2" methods="26" coveredmethods="4"/>
         <line num="10" count="1" type="stmt"/>
@@ -56,8 +56,8 @@
       </file>
       <file name="Form.jsx" path="/Users/sorodidiouf/Travail/client/components/Form.jsx">
         <metrics statements="28" coveredstatements="12" conditionals="10" coveredconditionals="0" methods="7" coveredmethods="2"/>
-        <line num="4" count="2" type="stmt"/>
-        <line num="10" count="2" type="stmt"/>
+        <line num="4" count="4" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
         <line num="17" count="3" type="stmt"/>
         <line num="18" count="3" type="stmt"/>
         <line num="28" count="3" type="stmt"/>
@@ -86,33 +86,33 @@
         <line num="75" count="3" type="stmt"/>
       </file>
       <file name="Job.jsx" path="/Users/sorodidiouf/Travail/client/components/Job.jsx">
-        <metrics statements="21" coveredstatements="9" conditionals="10" coveredconditionals="0" methods="5" coveredmethods="0"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="15" count="1" type="stmt"/>
-        <line num="32" count="1" type="stmt"/>
-        <line num="48" count="1" type="stmt"/>
-        <line num="56" count="1" type="stmt"/>
-        <line num="61" count="1" type="stmt"/>
-        <line num="67" count="1" type="stmt"/>
-        <line num="76" count="1" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="83" count="0" type="stmt"/>
-        <line num="88" count="0" type="stmt"/>
-        <line num="89" count="0" type="stmt"/>
-        <line num="90" count="0" type="stmt"/>
+        <metrics statements="21" coveredstatements="15" conditionals="10" coveredconditionals="0" methods="5" coveredmethods="2"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="56" count="3" type="stmt"/>
+        <line num="61" count="3" type="stmt"/>
+        <line num="67" count="3" type="stmt"/>
+        <line num="76" count="3" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
         <line num="94" count="0" type="stmt"/>
         <line num="98" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="102" count="0" type="stmt"/>
         <line num="103" count="0" type="stmt"/>
         <line num="104" count="0" type="stmt"/>
-        <line num="108" count="0" type="stmt"/>
+        <line num="108" count="1" type="stmt"/>
         <line num="110" count="0" type="stmt"/>
       </file>
       <file name="JobList.jsx" path="/Users/sorodidiouf/Travail/client/components/JobList.jsx">
-        <metrics statements="3" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="6" count="0" type="stmt"/>
+        <metrics statements="3" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="1"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
         <line num="9" count="0" type="stmt"/>
       </file>
     </package>

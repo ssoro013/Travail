@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Form from './Form.jsx';
 import styled from 'styled-components';
 
+//Styled components
 var Title = styled.div `
     font-weight: bold;
     font-size: 25px;
@@ -76,6 +77,14 @@ var Pre = styled.div `
 var Status = styled.div `
     float: right;
 `
+var More = styled.span `
+    color: rgb(101, 67, 33);
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+`
 
 class Job extends React.Component {
     constructor(props) {
@@ -85,19 +94,23 @@ class Job extends React.Component {
             maxWords: 250
         }
 
+        //Class methods binding
         this.onToggle = this.onToggle.bind(this);
         this.showMore = this.showMore.bind(this);
         this.handleClick = this.handleClick.bind(this);
     }
 
+    //Toggle method to show more/less
     onToggle() {
         this.setState({isOpen: !this.state.isOpen})
     }
-
+    
+    //Show More class method
     showMore() {
         return this.state.isOpen ? this.props.job.description : this.props.job.description.slice(0, this.state.maxWords)
     }
 
+    //Apply button class method to update jobId
     handleClick(event) {
         event.preventDefault();
         this.props.updateJobId(this.props.job.id);
@@ -113,16 +126,16 @@ class Job extends React.Component {
                 <Title>{title}</Title>
                 <TitleLocation>{`${company} • ${city}, ${state}`}</TitleLocation>
                 {status === 'Applied' ? <Status>{`${status} ✅`}</Status> : <Status>{`${status}`}</Status>}
-                <Salary>{`$${salary/1000},000`}</Salary>
+                <Salary>{`$${salary/1000},000/Year`}</Salary>
                 <Type>{type}</Type>
                 <Hr></Hr>
                 <DescriptionTitle>Description</DescriptionTitle>
                 <Description>
                     {this.showMore()}
-                    <a onClick={this.onToggle}><u>{this.state.isOpen ? 
-                    <span>Show Less</span> 
+                    <a onClick={this.onToggle}>{this.state.isOpen ? 
+                    <More>Show Less</More> 
                     :
-                    <span>Show More</span>}</u></a>
+                    <More>Show More</More>}</a>
                 </Description>
                 {status === 'Todo' || status === ' ' ? <button onClick={this.handleClick}>Apply!</button> : ''}
             </Pre>

@@ -104,7 +104,6 @@ var updateStatus = (req, res) => {
             res.send(error)
         } else {
             client.del('jobs', (error, reply) => {
-                console.log(reply);
                 if(!error) {
                     if(reply === 1) {
                         console.log(`Key is deleted`)

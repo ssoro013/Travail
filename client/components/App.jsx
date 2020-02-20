@@ -7,6 +7,7 @@ import Round from './Filters/Round.jsx';
 import Status from './Filters/Status.jsx';
 import Form from './Form.jsx';
 
+//Styled components
 var Page = styled.span `
     margin-right: 1em;
     font-size: 20px;
@@ -73,6 +74,8 @@ class App extends React.Component {
             currentPage: 1,
             jobsPerPage: 7,
         }
+
+        //Class methods binding
         this.getData = this.getData.bind(this);
         this.setLocations = this.setLocations.bind(this);
         this.setRounds = this.setRounds.bind(this);
@@ -84,6 +87,7 @@ class App extends React.Component {
         this.statusUpdate = this.statusUpdate.bind(this);
     }
 
+    //get requests
     getData() {
         axios.all([
             axios.get('/companies'),
@@ -128,7 +132,7 @@ class App extends React.Component {
     }
 
     
-    //Show/Hide Form
+    //Show/Hide Form methods
     showForm() {
         this.setState({
             show: true
@@ -141,12 +145,12 @@ class App extends React.Component {
         })
     }
 
-    //Status Update
+    //Update jobId 
     updateJobId(id) {
         this.setState({jobId: id});
     }
 
-    
+    //Update job status (Todo => Applied)
     statusUpdate() {
         axios.post('/update', {id: this.state.jobId})
         .then(() => this.getData())
@@ -155,7 +159,7 @@ class App extends React.Component {
         .catch(error => console.log(error));
     }
     
-    //Page
+    //Page click event listener
     handleClick(event) {
         window.scrollTo(0, 0);
         this.setState({currentPage: Number(event.target.id)})
@@ -182,14 +186,21 @@ class App extends React.Component {
 
         return (
             <div>
+                {/* Filters */}
                 <Filters>
                     <div><Location setLocations={this.setLocations} locations={this.state.locations}></Location></div>
                     <div><Round setRounds={this.setRounds} rounds={this.state.rounds}></Round></div>
                     <div><Status setStatus={this.setStatus} status={this.state.status}></Status></div>
                 </Filters>
                 <Hr></Hr>
+
+                {/* Form */}
                 <div style={{display: (this.state.show ? 'block': 'none')}}><Form statusUpdate={this.statusUpdate} hideForm={this.hideForm}></Form></div>
+                
+                {/* Jobs */}
                 {(this.state.jobs.length) && <JobList jobs={currentJobs} showForm={this.showForm} updateJobId={this.updateJobId}></JobList>}
+                
+                {/* Pagination */}
                 <Pagination>
                     {renderPages}
                 </Pagination>
