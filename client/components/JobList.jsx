@@ -9,7 +9,7 @@ var JobList = (props) => {
                 return (
                     <div
                         key = {job.id}>
-                        <Job job={job} company={props.companies.filter(company => company.id === job.company_id)} showForm={props.showForm}></Job>
+                        <Job job={job} showForm={props.showForm} updateJobId={props.updateJobId}></Job>
                     </div>
                 )
             })}

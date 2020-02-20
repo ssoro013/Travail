@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { css } from 'styled-components';
+import Form from './Form.jsx';
 import styled from 'styled-components';
 
 var Title = styled.div `
@@ -100,22 +100,23 @@ class Job extends React.Component {
 
     handleClick(event) {
         event.preventDefault();
+        this.props.updateJobId(this.props.job.id);
         this.props.showForm();
     }
 
     render() {
-        var {id, title, city, state, salary, type, description, status, company_id} = this.props.job;
+        var {id, title, city, state, salary, type, description, status, company, employees, funding, round} = this.props.job;
 
         return(
+            <div>
             <Pre>
                 <Title>{title}</Title>
-                <TitleLocation>{`${this.props.company[0].name} • ${city}, ${state}`}</TitleLocation>
-                <Status>{status}</Status>
+                <TitleLocation>{`${company} • ${city}, ${state}`}</TitleLocation>
+                {status === 'Applied' ? <Status>{`${status} ✅`}</Status> : <Status>{`${status}`}</Status>}
                 <Salary>{`$${salary/1000},000`}</Salary>
                 <Type>{type}</Type>
                 <Hr></Hr>
                 <DescriptionTitle>Description</DescriptionTitle>
-                {/* <Description>{description}</Description> */}
                 <Description>
                     {this.showMore()}
                     <a onClick={this.onToggle}><u>{this.state.isOpen ? 
@@ -123,8 +124,9 @@ class Job extends React.Component {
                     :
                     <span>Show More</span>}</u></a>
                 </Description>
-                {status === 'Todo' ? <button onClick={this.handleClick}>Apply!</button> : ''}
+                {status === 'Todo' || status === ' ' ? <button onClick={this.handleClick}>Apply!</button> : ''}
             </Pre>
+            </div>
         )
     }
 }

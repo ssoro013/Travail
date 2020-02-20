@@ -3,7 +3,8 @@ import axios from 'axios';
 import styled from 'styled-components';
 import JobList from './JobList.jsx';
 import Location from './Filters/Location.jsx';
-import Sort from './Sort.jsx';
+import Round from './Filters/Round.jsx';
+import Status from './Filters/Status.jsx';
 import Form from './Form.jsx';
 
 var Page = styled.span `
@@ -40,53 +41,94 @@ var Pagination = styled.div `
     padding: 10px;
     max-width: 750px;
     width: 100%;
-    border: 1px solid lightgray;
+`
+
+var Filters = styled.p `
+    font-family: Avenir, sans-serif;
+    margin: 32px auto 0;
+    padding: 10px;
+    max-width: 750px;
+    width: 100%;
+`
+
+var Hr = styled.hr `
+    position: relative;
+    border: none;
+    width: 50%;
 `
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            jobId: '',
             jobs: [],
             companies: [],
             locations: [],
             salary: [],
             funding: [],
-            round: [],
+            rounds: [],
             status: [],
             show: false,
             currentPage: 1,
             jobsPerPage: 7,
         }
+        this.getData = this.getData.bind(this);
         this.setLocations = this.setLocations.bind(this);
+        this.setRounds = this.setRounds.bind(this);
+        this.setStatus = this.setStatus.bind(this);
         this.showForm = this.showForm.bind(this);
         this.hideForm = this.hideForm.bind(this);
+        this.updateJobId = this.updateJobId.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.statusUpdate = this.statusUpdate.bind(this);
     }
 
-    componentDidMount() {
+    getData() {
         axios.all([
             axios.get('/companies'),
             axios.get('/jobs'),
-            axios.get('/locations')
+            axios.get('/locations'),
+            axios.get('/rounds'),
+            axios.get('/status')
         ])
-        .then(axios.spread((companies, jobs, locations) => {
+        .then(axios.spread((companies, jobs, locations, rounds, status) => {
             this.setState({
-                jobs: jobs.data,
+                jobs: jobs.data.sort((a,b) => a.id - b.id),
                 companies: companies.data,
-                locations: locations.data.map(location => location.city)
+                locations: locations.data.map(location => location.city),
+                rounds: rounds.data.map(round => round.round),
+                status: status.data.map(status => status.status)
             })
         }))
-        .then(() => console.log(this.state.locations))
         .catch(error => console.log(error))
     }
 
+    componentDidMount() {
+        this.getData();
+    }
+
+    //Filters
     setLocations(locations) {
         this.setState({
             locations: locations
         })
     }
 
+    setRounds(rounds) {
+        this.setState({
+            rounds: rounds
+        })
+    }
+
+    setStatus(status) {
+        this.setState({
+            status: status
+        })
+    }
+
+    
+    //Show/Hide Form
     showForm() {
         this.setState({
             show: true
@@ -99,17 +141,31 @@ class App extends React.Component {
         })
     }
 
+    //Status Update
+    updateJobId(id) {
+        this.setState({jobId: id});
+    }
+
+    
+    statusUpdate() {
+        axios.post('/update', {id: this.state.jobId})
+        .then(() => this.getData())
+        .then(() => this.hideForm())
+        .then(() => this.updateJobId(''))
+        .catch(error => console.log(error));
+    }
+    
+    //Page
     handleClick(event) {
         window.scrollTo(0, 0);
         this.setState({currentPage: Number(event.target.id)})
     }
-
     render() {
 
         //Pagination
         var lastIndex = this.state.currentPage * this.state.jobsPerPage;
         var firstIndex = lastIndex - this.state.jobsPerPage
-        var jobs = this.state.jobs.filter((job) => this.state.locations.includes(job.city))
+        var jobs = this.state.jobs.filter(job => this.state.locations.includes(job.city)).filter(job => this.state.rounds.includes(job.round)).filter(job => this.state.status.includes(job.status))
         var currentJobs = jobs.slice(firstIndex, lastIndex);
 
         var pages = [];
@@ -126,9 +182,14 @@ class App extends React.Component {
 
         return (
             <div>
-                <p><Location setLocations={this.setLocations} locations={this.state.locations}></Location></p>
-                <div style={{display: (this.state.show ? 'block': 'none')}}><Form></Form></div>
-                {(this.state.companies.length && this.state.jobs.length) && <JobList jobs={currentJobs} companies={this.state.companies} showForm={this.showForm}></JobList>}
+                <Filters>
+                    <div><Location setLocations={this.setLocations} locations={this.state.locations}></Location></div>
+                    <div><Round setRounds={this.setRounds} rounds={this.state.rounds}></Round></div>
+                    <div><Status setStatus={this.setStatus} status={this.state.status}></Status></div>
+                </Filters>
+                <Hr></Hr>
+                <div style={{display: (this.state.show ? 'block': 'none')}}><Form statusUpdate={this.statusUpdate} hideForm={this.hideForm}></Form></div>
+                {(this.state.jobs.length) && <JobList jobs={currentJobs} showForm={this.showForm} updateJobId={this.updateJobId}></JobList>}
                 <Pagination>
                     {renderPages}
                 </Pagination>

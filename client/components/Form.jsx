@@ -7,10 +7,15 @@ var FormDiv = styled.div `
     float: right;
 `
 
+var Required = styled.div `
+    color: red;
+    display: inline-block;
+`
+
 class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.initialState = {
             first: '',
             last: '',
             email: '',
@@ -19,7 +24,23 @@ class Form extends React.Component {
             resume: '',
             cover: ''
         }
+
+        this.state = this.initialState
+
+        this.validator = this.validator.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleClick1 = this.handleClick1.bind(this);
+        this.handleClick2 = this.handleClick2.bind(this);
+        this.reset = this.reset.bind(this);
+    }
+
+    validator(){
+        var {first, last, email, phone, location, resume, cover} = this.state
+        if(first === '' || last === '' || email === '' || phone === '' || location === '' || document.getElementById('resume').value === '') {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     handleChange(event) {
@@ -30,8 +51,23 @@ class Form extends React.Component {
         })
     }
 
-    handleClick(event) {
-        
+    handleClick1(event) {
+        event.preventDefault();
+        if(this.validator()) {
+            this.props.statusUpdate();
+            this.reset();
+        }
+    }
+
+    handleClick2(event) {
+        event.preventDefault();
+        this.props.hideForm();
+        this.reset();
+    }
+
+    reset() {
+        this.setState(this.initialState);
+        document.getElementById('resume').value = '';
     }
 
     render() {
@@ -41,29 +77,29 @@ class Form extends React.Component {
 
             <form onSubmit = {this.handleSubmit}>
                 <p>
-                    <div><label>First Name</label></div>
+                    <div><label>First Name <Required>*</Required></label></div>
                     <input name = 'first' value = {first} onChange = {this.handleChange} size="50"></input>
                 </p>
                 <p>
-                    <div><label>Last Name</label></div>
+                    <div><label>Last Name <Required>*</Required></label></div>
                     <input name = 'last' value = {last} onChange = {this.handleChange} size="50"></input>
                 </p>
                 <p>
-                    <div><label>Email</label></div>
+                    <div><label>Email <Required>*</Required></label></div>
                     <input name = 'email' value = {email} onChange = {this.handleChange} size="50"></input>
                 </p>
                 <p>
-                    <div><label>Phone Number</label></div>
+                    <div><label>Phone Number <Required>*</Required></label></div>
                     <input name = 'phone' value = {phone} onChange = {this.handleChange} size="50"></input>
                 </p>
                 <p>
-                    <div><label>Location</label></div>
+                    <div><label>Location <Required>*</Required></label></div>
                     <input name = 'location' value = {location} onChange = {this.handleChange} size="50"></input>
                 </p>
                 <p>
                     <label>
-                        Resume/CV
-                        <input name = 'resume' type='file'></input>
+                        Resume/CV <Required>*</Required>
+                        <input name = 'resume' id='resume' type='file'></input>
                     </label>
                 </p>
                 <p>
@@ -72,8 +108,8 @@ class Form extends React.Component {
                         <input name = 'cover' type='file'></input>
                     </label>
                 </p>
-               <button type='submit' value='Submit'>Apply</button>
-               <button type='submit' value='Submit'>Cancel</button>
+               <button type='submit' value='Submit'  onClick={this.handleClick1}>Apply</button>
+               <button type='submit' value='Submit' onClick={this.handleClick2}>Cancel</button>
             </form>
             </FormDiv>
         )
