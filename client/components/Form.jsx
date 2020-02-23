@@ -37,12 +37,33 @@ class Form extends React.Component {
 
     //Form inputs validator
     validator(){
-        var {first, last, email, phone, location, resume, cover} = this.state
-        if(first === '' || last === '' || email === '' || phone === '' || location === '' || document.getElementById('resume').value === '') {
-            return false;
+        var requiredFields = ['first', 'last', 'email', 'phone', 'location']
+        var invalidInputs = [];
+        var validInputs = [];
+        requiredFields.forEach(field => {
+            if(!this.state[field]) {
+                invalidInputs.push(field);
+            } else {
+                validInputs.push(field);
+            }
+        })
+
+        
+        if(!document.getElementById('resume').value) {
+            invalidInputs.push('resume');
         } else {
-            return true;
+            validInputs.push('resume');
         }
+
+
+        invalidInputs.forEach(input => {
+            document.getElementsByName(input)[0].style.borderColor = 'red'
+        })
+        validInputs.forEach(input => {
+            document.getElementsByName(input)[0].style.borderColor = 'black'
+        })
+        console.log(invalidInputs);
+        return invalidInputs.length === 0;
     }
     
     //Input handler
@@ -73,6 +94,11 @@ class Form extends React.Component {
     //Reset form input after application
     reset() {
         this.setState(this.initialState);
+        var keys = Object.keys(this.state);
+        keys.forEach(key => {
+            var element = document.getElementsByName(key)[0];
+            element.style.border = '1px solid black'
+        })
         document.getElementById('resume').value = '';
     }
 
