@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import Form from './Form.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCheckSquare, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+ 
+library.add(faCheckSquare, faCaretDown, faCaretUp);
 import styled from 'styled-components';
 
 //Styled components
@@ -86,6 +90,21 @@ var More = styled.span `
     }
 `
 
+var More1 = styled.span `
+    vertical-align: 30%;
+    color: blue;
+    font-weight: bold;
+    font-size: 13px;
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
+`
+
+var Icon = styled.span `
+    text-align: left;
+`
+
 class Job extends React.Component {
     constructor(props) {
         super(props);
@@ -138,6 +157,10 @@ class Job extends React.Component {
                     <More>Show More</More>}</a>
                 </Description>
                 {status === 'Todo' || status === ' ' ? <button onClick={this.handleClick}>Apply!</button> : ''}
+                <div>
+                    <Icon><FontAwesomeIcon icon="caret-down" color="blue" size="3x"/></Icon>
+                    <More1>More</More1>
+                </div>
             </Pre>
             </div>
         )
