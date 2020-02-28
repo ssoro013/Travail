@@ -51,12 +51,20 @@ var Type = styled.div `
     line-height: 20px
 `
 
-var Hr = styled.hr `
+var Hr1 = styled.hr `
     position: relative;
     border: none;
     height: 2px;
     background: orange;
     width: 50%;
+`
+
+var Hr2 = styled.hr `
+    position: relative;
+    border: none;
+    height: 1px;
+    background: lightgrey;
+    width: 100%;
 `
 
 var DescriptionTitle = styled.div `
@@ -154,6 +162,17 @@ class Job extends React.Component {
     render() {
         var {id, title, city, state, salary, type, description, status, company, employees, funding, round} = this.props.job;
         var employees = this.parseEmployeesData(this.props.employees[0]);
+        var Round = styled.div `
+            background-color: ${(round === "A" || round === "B") ? 'yellow' : 'green'};
+            width: 50px;
+            margin-right: 5px;
+            text-align: center;
+            border-radius: 2.5px;
+            font-weight: bold;
+            font-size: 12px;
+            vertical-align: middle;
+            line-height: 20px
+        `
         return(
             <div>
             <Pre>
@@ -162,7 +181,7 @@ class Job extends React.Component {
                 {status === 'Applied' ? <Status>{`${status} ✅`}</Status> : <Status>{`${status}`}</Status>}
                 <Salary>{`$${salary/1000},000/Year`}</Salary>
                 <Type>{type}</Type>
-                <Hr></Hr>
+                <Hr1></Hr1>
                 <DescriptionTitle>Description</DescriptionTitle>
                 <Description>
                     {this.showMore()}
@@ -172,11 +191,13 @@ class Job extends React.Component {
                     <More>Show More</More>}</a>
                 </Description>
                 {status === 'Todo' || status === ' ' ? <button onClick={this.handleClick}>Apply!</button> : ''}
+                <Hr2></Hr2>
                 <div>
-                    <Icon><FontAwesomeIcon icon="caret-down" color="blue" size="3x"/></Icon>
-                    <More1>More</More1>
+                    <Round>{round}</Round>
                     <Chart employees={employees}></Chart>
                 </div>
+                    {/* <Icon><FontAwesomeIcon icon="caret-down" color="blue" size="3x"/></Icon>
+                    <More1>More</More1> */}
             </Pre>
             </div>
         )
