@@ -26,12 +26,12 @@ class Chart extends Component {
             <header>
                 <h1>Employees</h1>
             </header>
-            <h2 style={{ textAlign: "left" }}>Line Chart</h2>
+            <h2 style={{ textAlign: "left" }}></h2>
             <LineChart
-                width={730}
+                width={750}
                 height={250}
                 data={data}
-                margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                margin={{ top: 5, right: 30, left: 5, bottom: 5 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
