@@ -41,6 +41,26 @@ var getJobs = (req, res) => {
     })
 }
 
+var getEmployees = (req, res) => {
+    var query = 'select employees.id, employees."2010", employees."2011", employees."2012", employees."2013", employees."2014", employees."2015", employees."2016", employees."2017", employees."2018", employees."2019", employees."2020", companies.company, companies.employees, companies.funding, companies.round from employees inner join companies on employees.company_id = companies.id'
+    client.get('employees', (err, data) => {
+        if(err) {
+            console.log(err)
+        } else if(data) {
+            res.send(JSON.parse(data).sort((a,b) => Number(a.id) - Number(b.id)))
+        } else {
+            connection.query(query, (error, results) => {
+                if(error) {
+                    res.send(error)
+                } else {
+                    client.setex('employees', 3600, JSON.stringify(results.rows.sort((a,b) => a - b)));
+                    res.send(results.rows.sort((a,b) => a - b));
+                }
+            })
+        }
+    })
+}
+
 var getLocations = (req, res) => {
     client.get('locations', (err, data) => {
         if(err) {
@@ -120,6 +140,7 @@ var updateStatus = (req, res) => {
 module.exports = {
     getCompanies,
     getJobs,
+    getEmployees,
     getLocations,
     updateStatus,
     getRounds,

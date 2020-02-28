@@ -6,6 +6,7 @@ import Location from './Filters/Location.jsx';
 import Round from './Filters/Round.jsx';
 import Status from './Filters/Status.jsx';
 import Form from './Form.jsx';
+// import Chart from './Chart.jsx'
 
 //Styled components
 var Page = styled.span `
@@ -65,6 +66,7 @@ class App extends React.Component {
             jobId: '',
             jobs: [],
             companies: [],
+            employees: [],
             locations: [],
             salary: [],
             funding: [],
@@ -92,14 +94,16 @@ class App extends React.Component {
         axios.all([
             axios.get('/companies'),
             axios.get('/jobs'),
+            axios.get('/employees'),
             axios.get('/locations'),
             axios.get('/rounds'),
             axios.get('/status')
         ])
-        .then(axios.spread((companies, jobs, locations, rounds, status) => {
+        .then(axios.spread((companies, jobs, employees, locations, rounds, status) => {
             this.setState({
                 jobs: jobs.data.sort((a,b) => a.id - b.id),
                 companies: companies.data,
+                employees: employees.data,
                 locations: locations.data.map(location => location.city),
                 rounds: rounds.data.map(round => round.round),
                 status: status.data.map(status => status.status)
@@ -198,7 +202,7 @@ class App extends React.Component {
                 <div style={{display: (this.state.show ? 'block': 'none')}}><Form statusUpdate={this.statusUpdate} hideForm={this.hideForm}></Form></div>
                 
                 {/* Jobs */}
-                {(this.state.jobs.length) && <JobList jobs={currentJobs} showForm={this.showForm} updateJobId={this.updateJobId}></JobList>}
+                {(this.state.jobs.length) && <JobList jobs={currentJobs} employees={this.state.employees} showForm={this.showForm} updateJobId={this.updateJobId}></JobList>}
                 
                 {/* Pagination */}
                 <Pagination>

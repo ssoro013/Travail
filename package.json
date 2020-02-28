@@ -19,11 +19,16 @@
         "url": "https://github.com/ssoro013/Travail/issues"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.27",
+        "@fortawesome/free-solid-svg-icons": "^5.12.1",
+        "@fortawesome/react-fontawesome": "^0.1.8",
         "axios": "^0.19.2",
+        "canvasjs": "^1.8.3",
         "compression": "^1.7.4",
         "core-js": "^3.6.4",
         "cors": "^2.8.5",
         "express": "^4.17.1",
+        "ionicons": "^5.0.0",
         "moment": "^2.24.0",
         "morgan": "^1.9.1",
         "nodemon": "^2.0.2",
@@ -32,6 +37,7 @@
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
         "reactjs-dropdown-component": "^1.0.6",
+        "recharts": "^2.0.0-beta.1",
         "redis": "^3.0.2",
         "request": "^2.88.2",
         "styled-components": "^5.0.1"

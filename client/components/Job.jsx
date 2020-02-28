@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faCheckSquare, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
+import Chart from './Chart.jsx';
  
 library.add(faCheckSquare, faCaretDown, faCaretUp);
 import styled from 'styled-components';
@@ -117,6 +118,7 @@ class Job extends React.Component {
         this.onToggle = this.onToggle.bind(this);
         this.showMore = this.showMore.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.parseEmployeesData = this.parseEmployeesData.bind(this);
     }
 
     //Toggle method to show more/less
@@ -136,9 +138,22 @@ class Job extends React.Component {
         this.props.showForm();
     }
 
+    parseEmployeesData(employee) {
+        let output = [];
+        for(let key in employee) {
+            if(!isNaN(key)) {
+                output.push({
+                    name: key,
+                    count: Number(employee[key])
+                })
+            }
+        }
+        return output;
+    }
+
     render() {
         var {id, title, city, state, salary, type, description, status, company, employees, funding, round} = this.props.job;
-
+        var employees = this.parseEmployeesData(this.props.employees[0]);
         return(
             <div>
             <Pre>
@@ -160,6 +175,7 @@ class Job extends React.Component {
                 <div>
                     <Icon><FontAwesomeIcon icon="caret-down" color="blue" size="3x"/></Icon>
                     <More1>More</More1>
+                    <Chart employees={employees}></Chart>
                 </div>
             </Pre>
             </div>
