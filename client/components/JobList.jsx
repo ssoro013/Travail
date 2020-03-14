@@ -2,7 +2,6 @@ import React from 'react';
 import Job from './Job.jsx';
 
 var JobList = (props) => {
-
     return (
         <div>
             {props.jobs.map(job => {
