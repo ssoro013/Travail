@@ -20,8 +20,6 @@ pipeline {
     post {
         always {
             echo 'This will always run'
-        }
-        always {
             junit 'build/reports/**/*.xml'
         }
         success {
@@ -29,10 +27,8 @@ pipeline {
         }
         failure {
             echo 'This will run only if failed'
-        }
-        failure {
             mail to: 'ssoro013@gmail.com',
-                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}"
+                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
                  body: "Something is wrong with ${env.BUILD_URL}"
         }
         unstable {
