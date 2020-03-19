@@ -114,67 +114,53 @@ var Icon = styled.span `
     text-align: left;
 `
 
-class Job extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isOpen: false,
-            maxWords: 250
-        }
+var Job = (props) => {
+    var [isOpen, setIsOpen] = useState(false);
+    var [maxWords, setMaxWords] = useState(250);
+    var {id, title, city, state, salary, type, description, status, company, employees, funding, round} = props.job;
 
-        //Class methods binding
-        this.onToggle = this.onToggle.bind(this);
-        this.showMore = this.showMore.bind(this);
-        this.handleClick = this.handleClick.bind(this);
-        this.parseEmployeesData = this.parseEmployeesData.bind(this);
+    function onToggle() {
+        setIsOpen(!isOpen)
     }
 
-    //Toggle method to show more/less
-    onToggle() {
-        this.setState({isOpen: !this.state.isOpen})
-    }
-    
-    //Show More class method
-    showMore() {
-        return this.state.isOpen ? this.props.job.description : this.props.job.description.slice(0, this.state.maxWords)
+    function showMore() {
+        return isOpen? props.job.description : props.job.description.slice(0, maxWords)
     }
 
-    //Apply button class method to update jobId
-    handleClick(event) {
+    function handleClick(event) {
         event.preventDefault();
-        this.props.updateJobId(this.props.job.id);
-        this.props.showForm();
+        props.updateJobId(props.job.id);
+        props.showForm();
+
     }
 
-    parseEmployeesData(employee) {
-        let output = [];
-        for(let key in employee) {
-            if(!isNaN(key)) {
+    function parseEmployeesData(employer) {
+        var output = [];
+        for (let key in employer) {
+            if(!isNaN(key)){
                 output.push({
                     name: key,
-                    count: Number(employee[key])
+                    count: Number(employer[key])
                 })
             }
         }
         return output;
     }
-
-    render() {
-        var {id, title, city, state, salary, type, description, status, company, employees, funding, round} = this.props.job;
-        var employees = this.parseEmployeesData(this.props.employees[0]);
-        var Round = styled.div `
-            background-color: ${(round === "A" || round === "B") ? 'yellow' : 'green'};
-            width: 50px;
-            margin-right: 5px;
-            text-align: center;
-            border-radius: 2.5px;
-            font-weight: bold;
-            font-size: 12px;
-            vertical-align: middle;
-            line-height: 20px
+    
+    var employees = parseEmployeesData(props.employees[0]);
+    var Round = styled.div `
+        background-color: ${(round === "A" || round === "B") ? 'yellow' : 'green'};
+        width: 50px;
+        margin-right: 5px;
+        text-align: center;
+        border-radius: 2.5px;
+        font-weight: bold;
+        font-size: 12px;
+        vertical-align: middle;
+        line-height: 20px
         `
-        return(
-            <div>
+    return(
+        <div>
             <Pre>
                 <Title>{title}</Title>
                 <TitleLocation>{`${company} • ${city}, ${state}`}</TitleLocation>
@@ -184,13 +170,13 @@ class Job extends React.Component {
                 <Hr1></Hr1>
                 <DescriptionTitle>Description</DescriptionTitle>
                 <Description>
-                    {this.showMore()}
-                    <a onClick={this.onToggle}>{this.state.isOpen ? 
+                    {showMore()}
+                    <a onClick={onToggle}>{isOpen ? 
                     <More>Show Less</More> 
                     :
                     <More>Show More</More>}</a>
                 </Description>
-                {status === 'Todo' || status === ' ' ? <button onClick={this.handleClick}>Apply!</button> : ''}
+                {status === 'Todo' || status === ' ' ? <button onClick={handleClick}>Apply!</button> : ''}
                 <Hr2></Hr2>
                 <div>
                     <Round>{round}</Round>
@@ -199,9 +185,8 @@ class Job extends React.Component {
                     {/* <Icon><FontAwesomeIcon icon="caret-down" color="blue" size="3x"/></Icon>
                     <More1>More</More1> */}
             </Pre>
-            </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Job;

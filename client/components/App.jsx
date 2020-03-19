@@ -6,7 +6,6 @@ import Location from './Filters/Location.jsx';
 import Round from './Filters/Round.jsx';
 import Status from './Filters/Status.jsx';
 import Form from './Form.jsx';
-// import Chart from './Chart.jsx'
 
 //Styled components
 var Page = styled.span `
@@ -202,6 +201,7 @@ class App extends React.Component {
                 <div style={{display: (this.state.show ? 'block': 'none')}}><Form statusUpdate={this.statusUpdate} hideForm={this.hideForm}></Form></div>
                 
                 {/* Jobs */}
+                
                 {(this.state.jobs.length) && <JobList jobs={currentJobs} employees={this.state.employees} showForm={this.showForm} updateJobId={this.updateJobId}></JobList>}
                 
                 {/* Pagination */}
