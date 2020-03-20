@@ -167,6 +167,7 @@ class App extends React.Component {
         window.scrollTo(0, 0);
         this.setState({currentPage: Number(event.target.id)})
     }
+
     render() {
 
         //Pagination
@@ -201,8 +202,7 @@ class App extends React.Component {
                 <div style={{display: (this.state.show ? 'block': 'none')}}><Form statusUpdate={this.statusUpdate} hideForm={this.hideForm}></Form></div>
                 
                 {/* Jobs */}
-                
-                {(this.state.jobs.length) && <JobList jobs={currentJobs} employees={this.state.employees} showForm={this.showForm} updateJobId={this.updateJobId}></JobList>}
+                <JobList jobs={currentJobs} employees={this.state.employees} showForm={this.showForm} updateJobId={this.updateJobId}></JobList>
                 
                 {/* Pagination */}
                 <Pagination>
