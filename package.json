@@ -13,7 +13,7 @@
     "scripts": {
         "start": "nodemon ./server/server.js",
         "build": "npx webpack --config webpack.config.js -d -w",
-        "test": "jest --coverage"
+        "test": "jest --coverage --coverageDirectory=output/coverage/jest"
     },
     "bugs": {
         "url": "https://github.com/ssoro013/Travail/issues"
@@ -40,6 +40,7 @@
         "reactjs-dropdown-component": "^1.0.6",
         "recharts": "^2.0.0-beta.1",
         "redis": "^3.0.2",
+        "regenerator-runtime": "^0.13.5",
         "request": "^2.88.2",
         "styled-components": "^5.0.1"
     },
@@ -71,6 +72,10 @@
         "testEnvironment": "jsdom",
         "snapshotSerializers": [
             "<rootDir>/node_modules/enzyme-to-json/serializer"
+        ],
+        "coverageReporters": [
+            "text",
+            "cobertura"
         ],
         "setupFiles": [
             "./setup.js"
