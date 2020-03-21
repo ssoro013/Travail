@@ -13,7 +13,7 @@
     "scripts": {
         "start": "nodemon ./server/server.js",
         "build": "npx webpack --config webpack.config.js -d -w",
-        "test": "jest --coverage --coverageDirectory=output/coverage/jest --forceExit"
+        "test": "jest --coverage --coverageDirectory=output/coverage/jest --detectOpenHandles"
     },
     "bugs": {
         "url": "https://github.com/ssoro013/Travail/issues"
