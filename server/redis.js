@@ -8,4 +8,16 @@ client.on('connect', () => {
     console.log(error)
 })
 
-module.exports = client;
+var closeInstance = async function(callback) {
+    await new Promise((resolve) => {
+        client.quit(() => {
+            resolve();
+        });
+    });
+    await new Promise(resolve => setImmediate(resolve));
+}
+
+module.exports = {
+    client,
+    closeInstance
+};
