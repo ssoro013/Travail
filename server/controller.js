@@ -1,8 +1,8 @@
 var connection = require('../database/db');
-var client = require('./redis');
+var redis = require('./redis');
 
 var getCompanies = (req, res) => {
-    client.get('companies', (err, data) => {
+    redis.client.get('companies', (err, data) => {
         if(err) {
             console.log(err)
         } else if(data) {
@@ -12,7 +12,7 @@ var getCompanies = (req, res) => {
                 if(error) {
                     res.send(error)
                 } else {
-                    client.setex('companies', 3600, JSON.stringify(results.rows))
+                    redis.client.setex('companies', 3600, JSON.stringify(results.rows))
                     res.send(results.rows)
                 }
             })
@@ -23,7 +23,7 @@ var getCompanies = (req, res) => {
 
 var getJobs = (req, res) => {
     var query = 'select jobs.id, jobs.title, jobs.city, jobs.state, jobs.salary, jobs.type, jobs.description, jobs.status, companies.company, companies.employees, companies.funding, companies.round from jobs inner join companies on jobs.company_id = companies.id'
-    client.get('jobs', (err, data) => {
+    redis.client.get('jobs', (err, data) => {
         if(err) {
             console.log(err)
         } else if(data) {
@@ -33,7 +33,7 @@ var getJobs = (req, res) => {
                 if(error) {
                     res.send(error)
                 } else {
-                    client.setex('jobs', 3600, JSON.stringify(results.rows.sort((a,b) => a - b)));
+                    redis.client.setex('jobs', 3600, JSON.stringify(results.rows.sort((a,b) => a - b)));
                     res.send(results.rows.sort((a,b) => a - b));
                 }
             })
@@ -43,7 +43,7 @@ var getJobs = (req, res) => {
 
 var getEmployees = (req, res) => {
     var query = 'select employees.id, employees."2010", employees."2011", employees."2012", employees."2013", employees."2014", employees."2015", employees."2016", employees."2017", employees."2018", employees."2019", employees."2020", companies.company, companies.employees, companies.funding, companies.round from employees inner join companies on employees.company_id = companies.id'
-    client.get('employees', (err, data) => {
+    redis.client.get('employees', (err, data) => {
         if(err) {
             console.log(err)
         } else if(data) {
@@ -53,7 +53,7 @@ var getEmployees = (req, res) => {
                 if(error) {
                     res.send(error)
                 } else {
-                    client.setex('employees', 3600, JSON.stringify(results.rows.sort((a,b) => a - b)));
+                    redis.client.setex('employees', 3600, JSON.stringify(results.rows.sort((a,b) => a - b)));
                     res.send(results.rows.sort((a,b) => a - b));
                 }
             })
@@ -62,7 +62,7 @@ var getEmployees = (req, res) => {
 }
 
 var getLocations = (req, res) => {
-    client.get('locations', (err, data) => {
+    redis.client.get('locations', (err, data) => {
         if(err) {
             console.log(err)
         } else if(data) {
@@ -72,7 +72,7 @@ var getLocations = (req, res) => {
                 if(error) {
                     res.send(error)
                 } else {
-                    client.setex('locations', 3600, JSON.stringify(results.rows))
+                    redis.client.setex('locations', 3600, JSON.stringify(results.rows))
                     res.send(results.rows);
                 }
             })
@@ -81,7 +81,7 @@ var getLocations = (req, res) => {
 }
 
 var getRounds = (req, res) => {
-    client.get('rounds', (err, data) => {
+    redis.client.get('rounds', (err, data) => {
         if(err) {
             console.log(err)
         } else if(data) {
@@ -91,7 +91,7 @@ var getRounds = (req, res) => {
                 if(error) {
                     res.send(error)
                 } else {
-                    client.setex('rounds', 3600, JSON.stringify(results.rows))
+                    redis.client.setex('rounds', 3600, JSON.stringify(results.rows))
                     res.send(results.rows);
                 }
             })
@@ -100,7 +100,7 @@ var getRounds = (req, res) => {
 }
 
 var getStatus = (req, res) => {
-    client.get('status', (err, data) => {
+    redis.client.get('status', (err, data) => {
         if(err) {
             console.log(err)
         } else if(data) {
@@ -110,7 +110,7 @@ var getStatus = (req, res) => {
                 if(error) {
                     res.send(error)
                 } else {
-                    client.setex('status', 3600, JSON.stringify(results.rows))
+                    redis.client.setex('status', 3600, JSON.stringify(results.rows))
                     res.send(results.rows);
                 }
             })
@@ -123,7 +123,7 @@ var updateStatus = (req, res) => {
         if(error) {
             res.send(error)
         } else {
-            client.del('jobs', (error, reply) => {
+            redis.client.del('jobs', (error, reply) => {
                 if(!error) {
                     if(reply === 1) {
                         console.log(`Key is deleted`)
