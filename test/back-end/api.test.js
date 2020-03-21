@@ -3,7 +3,7 @@ import "core-js/stable";
 
 var request = require("supertest");
 var server = require('../../server/app');
-var redis = require('../../server/redis');
+// var redis = require('../../server/redis');
 
 describe('GET /companies', () => {
     test('It should responds with an array of companies of length 7', async(done) => {
@@ -60,8 +60,4 @@ describe('Get /status', () => {
     });
 });
 
-// afterAll(async () => {
-// 	await new Promise(resolve => setTimeout(() => resolve(), 1000)); // avoid jest open handle error
-// });
-
-afterAll(()=> redis.closeInstance())
+// afterAll(()=> redis.closeInstance());
