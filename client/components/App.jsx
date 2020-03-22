@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import JobList from './JobList.jsx';
-import Location from './Filters/Location.jsx';
-import Round from './Filters/Round.jsx';
-import Status from './Filters/Status.jsx';
-import Form from './Form.jsx';
+var JobList = React.lazy(()=> import('./JobList.jsx'));
+var Location = React.lazy(()=> import('./Filters/Location.jsx'));
+var Round = React.lazy(()=> import('./Filters/Round.jsx'));
+var Status = React.lazy(()=> import('./Filters/Status.jsx'));
+var Form = React.lazy(()=> import('./Form.jsx'));
+import Loading from './Loading.jsx';
 
 //Styled components
 var Page = styled.span `
@@ -192,18 +193,35 @@ class App extends React.Component {
             <div>
                 {/* Filters */}
                 <Filters>
-                    <div><Location setLocations={this.setLocations} locations={this.state.locations}></Location></div>
-                    <div><Round setRounds={this.setRounds} rounds={this.state.rounds}></Round></div>
-                    <div><Status setStatus={this.setStatus} status={this.state.status}></Status></div>
+                    <div>
+                        <Suspense fallback={<Loading />}>
+                            <Location setLocations={this.setLocations} locations={this.state.locations}></Location>
+                        </Suspense>
+                    </div>
+                    <div>
+                        <Suspense fallback={<Loading />}>
+                            <Round setRounds={this.setRounds} rounds={this.state.rounds}></Round>
+                        </Suspense>
+                    </div>
+                    <div>
+                        <Suspense fallback={<Loading />}>
+                            <Status setStatus={this.setStatus} status={this.state.status}></Status>
+                        </Suspense>
+                    </div>
                 </Filters>
                 <Hr></Hr>
 
                 {/* Form */}
-                <div style={{display: (this.state.show ? 'block': 'none')}}><Form statusUpdate={this.statusUpdate} hideForm={this.hideForm}></Form></div>
+                <div style={{display: (this.state.show ? 'block': 'none')}}>
+                    <Suspense fallback={<Loading />}>
+                    <Form statusUpdate={this.statusUpdate} hideForm={this.hideForm}></Form>
+                    </Suspense>
+                </div>
                 
                 {/* Jobs */}
-                <JobList jobs={currentJobs} employees={this.state.employees} showForm={this.showForm} updateJobId={this.updateJobId}></JobList>
-                
+                <Suspense fallback={<Loading />}>
+                    <JobList jobs={currentJobs} employees={this.state.employees} showForm={this.showForm} updateJobId={this.updateJobId}></JobList>
+                </Suspense>
                 {/* Pagination */}
                 <Pagination>
                     {renderPages}
