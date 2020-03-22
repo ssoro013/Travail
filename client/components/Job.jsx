@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faCheckSquare, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
-import Chart from './Chart.jsx';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCheckSquare, faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+var Chart = React.lazy(()=> import('./Chart.jsx'));
+import Loading from './Loading.jsx';
  
 library.add(faCheckSquare, faCaretDown, faCaretUp);
 import styled from 'styled-components';
@@ -180,7 +181,9 @@ var Job = (props) => {
                 <Hr2></Hr2>
                 <div>
                     <Round>{round}</Round>
-                    <Chart employees={employees}></Chart>
+                    <Suspense fallback={<Loading />}>
+                        <Chart employees={employees}></Chart>
+                    </Suspense>
                 </div>
                     {/* <Icon><FontAwesomeIcon icon="caret-down" color="blue" size="3x"/></Icon>
                     <More1>More</More1> */}
