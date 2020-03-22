@@ -14,7 +14,7 @@ describe('GET /companies', () => {
     });
 });
 
-describe('Get /jobs', () => {
+describe('GET /jobs', () => {
     test('', async(done) => {
         var response = await request(server)
         .get('/jobs')
@@ -23,7 +23,7 @@ describe('Get /jobs', () => {
     });
 });
 
-describe('Get /employees', () => {
+describe('GET /employees', () => {
     test('', async(done) => {
         var response = await request(server)
         .get('/employees')
@@ -32,7 +32,7 @@ describe('Get /employees', () => {
     });
 });
 
-describe('Get /locations', () => {
+describe('GET /locations', () => {
     test('', async(done) => {
         var response = await request(server)
         .get('/locations')
@@ -41,7 +41,7 @@ describe('Get /locations', () => {
     });
 });
 
-describe('Get /rounds', () => {
+describe('GET /rounds', () => {
     test('', async(done) => {
         var response = await request(server)
         .get('/rounds')
@@ -50,7 +50,7 @@ describe('Get /rounds', () => {
     });
 });
 
-describe('Get /status', () => {
+describe('GET /status', () => {
     test('', async(done) => {
         var response = await request(server)
         .get('/status')
