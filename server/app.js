@@ -5,7 +5,8 @@ var cors = require('cors');
 var compression = require('compression');
 var morgan = require ('morgan');
 var bodyParser = require('body-parser');
-var routes = require('./routes.js')
+var routes = require('./routes.js');
+var path = require('path');
 
 app.use(express.static('public'));
 
@@ -18,6 +19,11 @@ app.use(morgan('tiny'));
 
 //routes
 app.use('/', routes);
+
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname, '../public', 'index.html'));
+});
+
 
 module.exports = app;
 module.exports.port = port;
