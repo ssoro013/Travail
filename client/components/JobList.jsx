@@ -20,16 +20,16 @@ var JobList = (props) => {
             {props.jobs.map(job => {
                 return (
                     <Pre key = {job.id}>
-                        <Suspense fallback={<Loading />}>
                             <Router>
                                 <Link to={`/${job.id}`}>{job.title}</Link>
-                                    <Switch>
-                                        <Route exact path={`/${job.id}`}>
+                                <Switch>
+                                    <Route exact path={`/${job.id}`}>
+                                        <Suspense fallback={<Loading />}>
                                             <Job job={job} showForm={props.showForm} updateJobId={props.updateJobId} employees={props.employees.filter(employee => employee.company === job.company)} />
-                                        </Route>
-                                    </Switch>
+                                        </Suspense>
+                                    </Route>
+                                </Switch>
                             </Router>
-                        </Suspense>
                     </Pre>
                 )
             })}
