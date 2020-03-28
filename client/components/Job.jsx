@@ -185,8 +185,8 @@ var Job = (props) => {
                         <Chart employees={employees}></Chart>
                     </Suspense>
                 </div>
-                    {/* <Icon><FontAwesomeIcon icon="caret-down" color="blue" size="3x"/></Icon>
-                    <More1>More</More1> */}
+                    <Icon><FontAwesomeIcon icon="caret-down" color="blue" size="3x"/></Icon>
+                    <More1>More</More1>
             </Pre>
         </div>
     )
