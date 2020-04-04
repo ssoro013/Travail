@@ -118,9 +118,9 @@ class App extends React.Component {
 
     //Filters
     setLocations(locations) {
-        this.setState({
+        this.setState(state=> ({
             locations: locations
-        })
+        }))
     }
 
     setRounds(rounds) {
